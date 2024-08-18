@@ -770,5 +770,8 @@ Full
       (text))
     (text)
     (query_tree
-      (query_author
-        (text)))))
+      (text)
+      (ident
+        (text))
+      (text)
+      (text))))
