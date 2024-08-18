@@ -7,7 +7,7 @@ Text
 --------------------------------------------------------------------------------
 
 (source_file
-  (paragraph
+  (p
     (text)))
 
 ================================================================================
@@ -37,7 +37,7 @@ Subtree
       (text))
     (text)
     (text)
-    (paragraph
+    (p
       (text)))
   (subtree
     (text)
@@ -45,7 +45,7 @@ Subtree
       (text))
     (text)
     (text)
-    (paragraph
+    (p
       (text))))
 
 ================================================================================
@@ -199,7 +199,7 @@ Ident
 --------------------------------------------------------------------------------
 
 (source_file
-  (paragraph
+  (p
     (ident
       (text))
     (text)))
@@ -215,7 +215,7 @@ Inline Math
 --------------------------------------------------------------------------------
 
 (source_file
-  (paragraph
+  (p
     (text)
     (inline_math
       (text))))
@@ -231,7 +231,7 @@ Display Math
 --------------------------------------------------------------------------------
 
 (source_file
-  (paragraph
+  (p
     (text)
     (display_math
       (text))))
@@ -253,18 +253,18 @@ Math Text
 --------------------------------------------------------------------------------
 
 (source_file
-  (paragraph
+  (p
     (text)
     (display_math
       (text)))
-  (paragraph
+  (p
     (text)
     (display_math
       (text))
     (text)
     (inline_math
       (text)))
-  (paragraph
+  (p
     (text)
     (display_math
       (text))
@@ -286,7 +286,7 @@ Math Commands
 --------------------------------------------------------------------------------
 
 (source_file
-  (paragraph
+  (p
     (text)
     (display_math
       (ident
@@ -353,7 +353,7 @@ Function Definition
       (text)
       (text)
       (text)
-      (paragraph
+      (p
         (ident
           (text))
         (ident
@@ -381,7 +381,7 @@ Prim
 --------------------------------------------------------------------------------
 
 (source_file
-  (paragraph
+  (p
     (text)
     (markdown_link
       (text)
@@ -657,13 +657,13 @@ Full
   (ident
     (text))
   (text)
-  (paragraph
+  (p
     (text))
   (transclude
     (addr
       (prefix)
       (id)))
-  (paragraph
+  (p
     (text)
     (ul
       (text)
