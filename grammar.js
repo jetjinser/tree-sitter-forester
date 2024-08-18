@@ -55,23 +55,24 @@ module.exports = grammar({
         $._braces,
         $.text,
         $.comment,
-        $._meta
+        $._meta,
       ),
 
     _braces: ($) => braces(repeat1($._node)),
     _squares: ($) => squares(repeat1($._node)),
     _parens: ($) => parens(repeat1($._node)),
 
-    _meta: ($) => choice(
-      $.title,
-      $.author,
-      $.contributor,
-      $.date,
-      $.tag,
-      $.ref,
-      $.taxon,
-      $.meta,
-    ),
+    _meta: ($) =>
+      choice(
+        $.title,
+        $.author,
+        $.contributor,
+        $.date,
+        $.tag,
+        $.ref,
+        $.taxon,
+        $.meta,
+      ),
     title: ($) => command("title", $._arg),
     author: ($) => field("author", command("author", $._txt_arg)),
     contributor: ($) =>
@@ -89,8 +90,26 @@ module.exports = grammar({
     taxon: ($) => command("taxon", $._txt_arg),
     meta: ($) => prec.left(command("meta", seq($._txt_arg, $._arg))),
 
-    xml_tag: ($) => seq("\\<", $._xml_qname, ">"),
-    decl_xmlns: ($) => seq("\\xmlns:", $._xml_base_ident, $._txt_arg),
+
+    xml_tag: ($) =>
+      seq($.xml_name, choice($.xml_body, seq(repeat1($.xml_attr), $.xml_body))),
+    xml_name: ($) => seq("\\<", $.xml_qname, ">"),
+    xml_attr: ($) => seq(field("key", squares($.text)), field("value", $._arg)),
+    xml_body: ($) => $._opt_arg,
+    decl_xmlns: ($) => seq("\\xmlns:", field("name", $.xml_base_ident), field("ns", $._txt_arg)),
+
+    xml_base_ident: ($) =>
+      seq($._alpha, repeat(choice($._alpha, $._digit, /[-/#]/))),
+    xml_qname: ($) =>
+      choice(
+        seq(
+          field("prefix", $.xml_base_ident),
+          ":",
+          field("uname", $.xml_base_ident),
+        ),
+        $.xml_base_ident,
+      ),
+
 
     year: ($) => /[0-9]{4}/,
     month: ($) => /(1[012]|0?[1-9])/,
@@ -189,6 +208,7 @@ module.exports = grammar({
     ident_with_method_calls: ($) =>
       prec(1, prec.left(seq("\\", $.text, "#", repeat1(choice("#", $.text))))),
     _arg: ($) => braces(repeat1(choice($._node))),
+    _opt_arg: ($) => braces(repeat(choice($._node))),
     _link: ($) => choice($.markdown_link, $.unlabeled_link),
     addr: ($) => seq(field("prefix", $.prefix), "-", field("id", $.id)),
     id: ($) => repeat1(choice($._alpha, $._digit, "-", "_")),
@@ -208,9 +228,5 @@ module.exports = grammar({
     _digit: ($) => /[0-9]+/,
     text: ($) => /[^%#\\\{\}\[\]\(\)\r\n]+/,
     _txt_arg: ($) => braces($.text),
-    _xml_base_ident: ($) =>
-      seq($._alpha, repeat(choice($._alpha, $._digit, /[-/#]/))),
-    _xml_qname: ($) =>
-      choice(seq($._xml_base_ident, ":", $._xml_base_ident), $._xml_base_ident),
   },
 });
