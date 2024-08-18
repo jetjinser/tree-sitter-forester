@@ -55,12 +55,23 @@ module.exports = grammar({
         $._braces,
         $.text,
         $.comment,
+        $._meta
       ),
 
     _braces: ($) => braces(repeat1($._node)),
     _squares: ($) => squares(repeat1($._node)),
     _parens: ($) => parens(repeat1($._node)),
 
+    _meta: ($) => choice(
+      $.title,
+      $.author,
+      $.contributor,
+      $.date,
+      $.tag,
+      $.ref,
+      $.taxon,
+      $.meta,
+    ),
     title: ($) => command("title", $._arg),
     author: ($) => field("author", command("author", $._txt_arg)),
     contributor: ($) =>
@@ -75,6 +86,8 @@ module.exports = grammar({
       ),
     tag: ($) => field("tag", command("tag", $._txt_arg)),
     ref: ($) => field("ref", command("ref", $._arg)),
+    taxon: ($) => command("taxon", $._txt_arg),
+    meta: ($) => prec.left(command("meta", seq($._txt_arg, $._arg))),
 
     xml_tag: ($) => seq("\\<", $._xml_qname, ">"),
     decl_xmlns: ($) => seq("\\xmlns:", $._xml_base_ident, $._txt_arg),
@@ -85,8 +98,6 @@ module.exports = grammar({
     def: ($) => command("def", $.fun_spec),
     tex_package: ($) => command("tex_package", $._txt_arg),
     alloc: ($) => command("alloc", $.ident),
-    taxon: ($) => command("taxon", $._txt_arg),
-    meta: ($) => prec.left(command("meta", seq($._txt_arg, $._arg))),
     import: ($) => prec(2, command("import", braces($.addr))),
     export: ($) => prec(2, command("export", braces($.addr))),
     namespace: ($) => command("namespace", $._arg),
