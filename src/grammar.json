@@ -135,6 +135,10 @@
         {
           "type": "SYMBOL",
           "name": "comment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_meta"
         }
       ]
     },
@@ -195,6 +199,43 @@
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "_meta": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "title"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "author"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "contributor"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "date"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ref"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "taxon"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "meta"
         }
       ]
     },
@@ -363,6 +404,53 @@
         ]
       }
     },
+    "taxon": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "\\"
+        },
+        {
+          "type": "STRING",
+          "value": "taxon"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_txt_arg"
+        }
+      ]
+    },
+    "meta": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "\\"
+          },
+          {
+            "type": "STRING",
+            "value": "meta"
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_txt_arg"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_arg"
+              }
+            ]
+          }
+        ]
+      }
+    },
     "xml_tag": {
       "type": "SEQ",
       "members": [
@@ -468,53 +556,6 @@
           "name": "ident"
         }
       ]
-    },
-    "taxon": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "\\"
-        },
-        {
-          "type": "STRING",
-          "value": "taxon"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_txt_arg"
-        }
-      ]
-    },
-    "meta": {
-      "type": "PREC_LEFT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "\\"
-          },
-          {
-            "type": "STRING",
-            "value": "meta"
-          },
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_txt_arg"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_arg"
-              }
-            ]
-          }
-        ]
-      }
     },
     "import": {
       "type": "PREC",
