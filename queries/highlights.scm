@@ -1,61 +1,143 @@
-(comment) @comment
+; comments
+(comment) @comment @spell
 
+; punctuation
 [
- "\\"
- "("
- ")"
- "{"
- "}"
- "["
- "]"
+  "\\"
+  "("
+  ")"
+  "{"
+  "}"
+  "["
+  "]"
 ] @punctuation.bracket
 
-(paragraph "p" @function.builtin)
-(li "li" @markup.list)
-(ul "ul"  @markup.list)
-(ol "ol"  @markup.list)
-(em "em"  @function.builtin)
+; builtin functions
+(p "p" @function.builtin)
+(em "em" @function.builtin)
 (strong "strong" @function.builtin)
 (code "code" @function.builtin)
+(blockquote "blockquote" @function.builtin)
+(pre "pre" @function.builtin)
+(tex "tex" @function.builtin)
 
-(tag "tag" @field)
-(author "author" @field)
-(contributor "contributor" @field)
-(title "title" @field)
-(taxon "taxon" @field)
-(meta "meta" @field)
+; user-defined functions
+(ident (text) @function)
 
-(title "title" @text.title)
-(title (_) @text.title)
-(author author: (_) @markup.heading.url)
+; meta keywords
+(title "title" @keyword)
+(author "author" @keyword)
+(contributor "contributor" @keyword)
+(date "date" @keyword)
+(tag "tag" @keyword)
+(ref "ref" @keyword)
+(taxon "taxon" @keyword)
+(meta "meta" @keyword)
 
-(ident label: (_) @string)
-(transclude "transclude" @include)
-(transclude address: (_) @markup.link.url)
+; special meta markups
+(title (_) @markup.heading)
+(title (text) @spell)
+(author (_) @markup.link.label)
 
-(def "def" @keyword)
-(object "object" @constant)
-(object self: (_) @keyword)
-(method_decl key: (_) @method)
-(patch "patch" @text.diff.add)
-(patch object: (_) @constant)
+; list markups
+(li "li" @markup.list)
+(ul "ul" @markup.list)
+(ol "ol" @markup.list)
 
-(markdown_link label: (_) @label)
-(markdown_link dest: (_) @text.uri)
-(unlabeled_link (external_link (_) @text.uri))
+; transcludes
+(transclude "transclude" @keyword.include)
+(transclude address: (_) @markup.link.label)
 
-(scope "scope" @namespace)
-(put "put" @variable.parameter)
+; define functions
+(def "def" @keyword.function)
+(let "let" @keyword.function)
+(fun_spec identifier: (_ (text) @function))
+(fun_spec binder: (text) @variable.parameter)
 
+; define objects
+(object "object" @keyword.type)
+(object self: (_) @variable.parameter)
+(ident_with_method_calls . (text) @variable)
+(ident_with_method_calls "#" @operator)
+(ident_with_method_calls (text) (text) @function.method.call)
+(method_decl key: (_) @function.method)
+
+; patch objects
+(patch "patch" @keyword.type)
+(patch object: (text) @type)
+(patch self: (_) @variable.parameter)
+
+; links
+(markdown_link label: (_) @markup.link.label)
+(markdown_link dest: (_) @markup.link)
+(unlabeled_link (external_link (_) @markup.link))
+
+; conceal links
+; TODO(jinser): seems useless
+; (markdown_link
+;   [
+;     "["
+;     "]"
+;     "("
+;     dest: (_)
+;     ")"
+;   ] @conceal
+;   (#set! conceal ""))
+;
+; (unlabeled_link
+;   [
+;    "[["
+;    "]]"
+;   ] @conceal
+;   (#set! conceal ""))
+
+; scope
+(scope "scope" @module)
+(get "get" @keyword)
+(put "put" @keyword)
+(open "open" @keyword)
+(alloc "alloc" @keyword)
+
+; namespace
+(namespace "namespace" @module)
+
+; subtree
+(subtree "subtree" @keyword)
+
+; query
 (query_tree "query" @keyword)
-;(query_author "query/author" @keyword)
-;(query_tag "query/tag" @keyword)
-;(query_taxon "query/taxon" @keyword)
-;(query_and "query/and" @keyword)
-;(query_or "query/or" @keyword)
-;(query_meta "query/meta" @keyword)
 
-(import "import" @include)
-(export "export" @include)
-(transclude "transclude" @include)
+; include
+(import "import" @keyword.include)
+(export "export" @keyword.include)
 
+; math
+; TODO(jinser): inject LaTeX
+; (inline_math) @markup.math
+; (display_math) @markup.math
+
+; XML
+; bug(jinser): `\\<` is a token, `<` is not
+; (xml_tag (xml_name ["<" ">"] @tag.delimiter))
+(xml_tag (xml_name
+  (xml_qname
+    prefix: (_) @module
+    uname: (_) @function.method.call)))
+(xml_tag (xml_name (xml_qname ":" @operator)))
+(xml_tag (xml_attr
+  key: (_) @label
+  value: (_) @variable.parameter))
+; bug(jinser): `xmlns` is not a token
+; (decl_xmlns name: "xmlns" @keyword)
+(decl_xmlns name: (_) @module
+            ns: (_) @markup.link)
+
+; special markup
+(p (text) @spell)
+(li (text) @spell)
+(em (text) @spell @markup.italic)
+(strong (text) @spell @markup.strong)
+(markdown_link label: (text) @spell)
+(method_decl value: (method_body (text) @spell))
+
+; TODO(jinser): query (code) and (pre) as @markup.raw
