@@ -122,8 +122,8 @@ Import
 (source_file
   (import
     (addr
-      prefix: (prefix)
-      id: (id))))
+      (prefix)
+      (id))))
 
 ================================================================================
 Export
@@ -176,9 +176,7 @@ Transclusion
 
 (source_file
   (transclude
-    address: (addr
-      prefix: (prefix)
-      id: (id))))
+    dest: (text)))
 
 ================================================================================
 Ident
@@ -351,9 +349,7 @@ Function Definition
         (ident
           (text)))
       (transclude
-        (addr
-          (prefix)
-          (id))))))
+        (text)))))
 
 ================================================================================
 Prim
@@ -381,8 +377,7 @@ Prim
       (text)
       (li
         (unlabeled_link
-          (external_link
-            (text))))
+          (text)))
       (text))
     (text)
     (markdown_link
@@ -674,9 +669,7 @@ Full
   (p
     (text))
   (transclude
-    (addr
-      (prefix)
-      (id)))
+    (text))
   (p
     (text)
     (ul
@@ -693,8 +686,7 @@ Full
       (text))
     (text)
     (unlabeled_link
-      (external_link
-        (text)))
+      (text))
     (text)
     (code
       (text)))
@@ -706,8 +698,7 @@ Full
     (text))
   (text)
   (unlabeled_link
-    (external_link
-      (text)))
+    (text))
   (text)
   (code
     (text))
@@ -756,8 +747,7 @@ Full
     (text)
     (text))
   (unlabeled_link
-    (external_link
-      (text)))
+    (text))
   (text)
   (ident
     (text))
@@ -765,8 +755,7 @@ Full
     (text)
     (text))
   (unlabeled_link
-    (external_link
-      (text)))
+    (text))
   (text)
   (ident
     (text))
