@@ -540,47 +540,73 @@ XML
 
 (source_file
   (decl_xmlns
+    (xml_base_ident)
     (text))
   (def
     (fun_spec
       (ident
         (text))
       (text)
-      (xml_tag)
-      (ident
-        (text))))
+      (xml_tag
+        (xml_name
+          (xml_qname
+            (xml_base_ident)
+            (xml_base_ident)))
+        (xml_body
+          (ident
+            (text))))))
   (def
     (fun_spec
       (ident
         (text))
       (text)
-      (xml_tag)
-      (ident
-        (text))))
+      (xml_tag
+        (xml_name
+          (xml_qname
+            (xml_base_ident)
+            (xml_base_ident)))
+        (xml_body
+          (ident
+            (text))))))
   (def
     (fun_spec
       (ident
         (text))
       (text)
-      (xml_tag)
-      (ident
-        (text))))
+      (xml_tag
+        (xml_name
+          (xml_qname
+            (xml_base_ident)
+            (xml_base_ident)))
+        (xml_body
+          (ident
+            (text))))))
   (def
     (fun_spec
       (ident
         (text))
       (text)
-      (xml_tag)
-      (ident
-        (text))))
+      (xml_tag
+        (xml_name
+          (xml_qname
+            (xml_base_ident)
+            (xml_base_ident)))
+        (xml_body
+          (ident
+            (text))))))
   (def
     (fun_spec
       (ident
         (text))
       (text)
-      (xml_tag)
-      (ident
-        (text)))))
+      (xml_tag
+        (xml_name
+          (xml_qname
+            (xml_base_ident)
+            (xml_base_ident)))
+        (xml_body
+          (ident
+            (text)))))))
 
 ================================================================================
 Full
