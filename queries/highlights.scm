@@ -44,10 +44,6 @@
 (ul "ul" @markup.list)
 (ol "ol" @markup.list)
 
-; transcludes
-(transclude "transclude" @keyword.include)
-(transclude address: (_) @markup.link.label)
-
 ; define functions
 (def "def" @keyword.function)
 (let "let" @keyword.function)
@@ -68,9 +64,11 @@
 (patch self: (_) @variable.parameter)
 
 ; links
+(transclude "transclude" @keyword.include)
+(transclude dest: (_) @markup.link.label)
 (markdown_link label: (_) @markup.link.label)
 (markdown_link dest: (_) @markup.link)
-(unlabeled_link (external_link (_) @markup.link))
+(unlabeled_link dest: (_) @markup.link)
 
 ; conceal links
 ; TODO(jinser): seems useless
