@@ -1,15 +1,31 @@
+/// <reference types="tree-sitter-cli/dsl" />
+// @ts-check
+
+/**
+ * @param {RuleOrLiteral} rule
+ * @param {RuleOrLiteral} arg
+ */
 function command(rule, arg) {
   return seq("\\", rule, arg);
 }
 
+/**
+ * @param {RuleOrLiteral} p
+ */
 function braces(p) {
   return seq("{", p, "}");
 }
 
+/**
+ * @param {RuleOrLiteral} p
+ */
 function squares(p) {
   return seq("[", p, "]");
 }
 
+/**
+ * @param {RuleOrLiteral} p
+ */
 function parens(p) {
   return seq("(", p, ")");
 }
